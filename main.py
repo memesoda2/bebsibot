@@ -45,7 +45,7 @@ async def on_ready():
 async def on_message(message):
   if "odio i froci" in message.content:
     await message.channel.send("Bravissimo! :smiley: ")
-  elif "cyka blayd" in message.content
+  elif "cyka blayd" in message.content:
     await message.channel.send("Python Blyad :flag_ru:")
   else:
     await client.process_commands(message)  # Add this line
