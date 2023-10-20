@@ -45,6 +45,8 @@ async def on_ready():
 async def on_message(message):
   if "odio i froci" in message.content:
     await message.channel.send("Bravissimo! :smiley: ")
+  elif "cyka blayd" in message.content
+    await message.channel.send("Python Blyad :flag_ru:")
   else:
     await client.process_commands(message)  # Add this line
 
@@ -98,6 +100,10 @@ async def update(ctx):
 @client.command() #sempre in ogni comando
 async def ciao(ctx): #dopo def c'è il nome del comando
 	await ctx.send("ciao")#invia il messagio nelle virgolette
+
+@client.command() #sempre in ogni comando
+async def Gambling(ctx): #dopo def c'è il nome del comando
+	await ctx.send("KEEP GAMBLING BLAYD :100: ")
 
 
 
