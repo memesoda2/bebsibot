@@ -87,7 +87,7 @@ async def hello(ctx):
 @is_auth
 @client.command()
 async def update(ctx):
-	embed = discord.Embed(title="Reloading system...", color=0x2c2f33)
+	embed = discord.Embed(title="Aggiornamento del bot...", color=0x2c2f33)
 	embed.set_image(url="https://support.discord.com/hc/en-us/article_attachments/206303208/eJwVyksOwiAQANC7sJfp8Ke7Lt15A0MoUpJWGmZcGe-ubl_eW7zGLmaxMZ80A6yNch-rJO4j1SJr73Uv6Wwkcz8gMae8HeXJBOjC5NEap42dokUX_4SotI8GVfBaYYDldr3n3y_jomRtD_H5ArCeI9g.zGz1JSL-9DXgpkX_SkmMDM8NWGg.gif")
 	embed.add_field(name = '**System info**', value = f':gear:', inline = False)
 	embed.add_field(name = ':globe_with_meridians: **Ping**', value = f'{round(client.latency * 1000)}ms')
