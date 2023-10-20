@@ -1,0 +1,104 @@
+#discord-base
+import discord
+from discord.ext import commands
+
+#ui
+from discord import ui
+from discord import app_commands
+
+import asyncio
+import json
+
+with open("config.json") as f:
+    try:
+        data = json.load(f)
+    except json.decoder.JSONDecodeError as e:
+        print("Errore in config.json")
+        print(e)
+        exit(1)
+
+auth_list = [598119406731657216, 673167077280055326]
+is_auth = commands.check(lambda ctx: ctx.author.id in auth_list )
+
+token_json = data["discord_token"]
+
+intents = discord.Intents.default()
+intents.message_content = True
+intents.members = True
+intents.presences = True
+intents.reactions = True
+
+
+
+
+client = commands.Bot(command_prefix='!', intents=intents)
+
+@client.event
+async def on_ready():
+  slash_sync = await client.tree.sync()
+  print(f"Synced app command (tree) {len(slash_sync)}.")
+  print(f'Logged in as {client.user.name}')
+  
+
+
+@client.event
+async def on_message(message):
+  if "odio i froci" in message.content:
+    await message.channel.send("Bravissimo! :smiley: ")
+  else:
+    await client.process_commands(message)  # Add this line
+
+#comandi
+
+@client.event
+async def on_member_join(member):
+  if member.bot:
+    role = discord.utils.get(member.guild.roles, id=1033424225584816250)
+    await member.add_roles(role)
+  if not member.bot:
+    role = discord.utils.get(member.guild.roles, id=1034914089807400970)
+    await member.add_roles(role)
+
+@client.tree.command(name="reportbug", description="Segnala un bug") #slash command
+async def report_bug(interaction: discord.Interaction):
+  modal = BugModal
+  await interaction.response.send_modal(BugModal())
+
+class BugModal(ui.Modal, title='Report Bug'):
+    bug_name = ui.TextInput(label='Bugged Command name',required=True,placeholder='Bugged command name...', max_length=50)
+    answer = ui.TextInput(label='Description of the bug', style=discord.TextStyle.paragraph, max_length=300,placeholder='Bug description...')
+
+    async def on_submit(self, interaction: discord.Interaction):
+        channel = client.get_channel(1164195802047053894)
+        embed = discord.Embed(title="Bug report ",color=discord.Color.green())
+        embed.add_field(name="Bugged Command name", value=self.children[0].value)
+        embed.add_field(name="Description of the bug", value=self.children[1].value)
+        embed.add_field(name="User:", value=f"`{interaction.user}`")
+        await channel.send(embed=embed)
+        embed1 = discord.Embed(title="Bug report sent", color=discord.Color.green())
+        await interaction.response.send_message(embeds=[embed1], ephemeral=True)
+
+
+
+@client.command()
+async def hello(ctx):
+  await ctx.send('Hello, world!')
+
+@is_auth
+@client.command()
+async def update(ctx):
+	embed = discord.Embed(title="Reloading system...", color=0x2c2f33)
+	embed.set_image(url="https://support.discord.com/hc/en-us/article_attachments/206303208/eJwVyksOwiAQANC7sJfp8Ke7Lt15A0MoUpJWGmZcGe-ubl_eW7zGLmaxMZ80A6yNch-rJO4j1SJr73Uv6Wwkcz8gMae8HeXJBOjC5NEap42dokUX_4SotI8GVfBaYYDldr3n3y_jomRtD_H5ArCeI9g.zGz1JSL-9DXgpkX_SkmMDM8NWGg.gif")
+	embed.add_field(name = '**System info**', value = f':gear:', inline = False)
+	embed.add_field(name = ':globe_with_meridians: **Ping**', value = f'{round(client.latency * 1000)}ms')
+	await ctx.send(embed=embed, delete_after=4)
+	await asyncio.sleep(5)
+	exit(1)
+
+
+
+
+
+
+
+client.run(token_json)
