@@ -95,7 +95,9 @@ async def update(ctx):
 	await asyncio.sleep(5)
 	exit(1)
 
-
+@client.command() #sempre in ogni comando
+async def ciao(ctx): #dopo def c'è il nome del comando
+	await ctx.send("ciao")#invia il messagio nelle virgolette
 
 
 
