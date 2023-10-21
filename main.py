@@ -97,11 +97,11 @@ async def ban(ctx, member: Option(discord.Member, description = "Chi vuoi bannar
 		await ctx.respond("Pluh Non puoi bannarti da solo")
 	elif member.guild_permission.administrator:
    		await ctx.respond("Non puoi bannare un admin")
-     	else:
+	else:
 		if reason == None:
-  			reason = f"None provided by {ctx.author}"
-     	await member.ban(reason = reason)
-      	await ctx.respond(f" <@{ctx.author.id}>, <@{member.id}> è stato bannato da questo server\n\nReason: {reason}")
+			reason = f"None provided by {ctx.author}"
+			await member.ban(reason = reason)
+			await ctx.respond(f" <@{ctx.author.id}>, <@{member.id}> è stato bannato da questo server\n\nReason: {reason}")
 
        @ban.error
        async def banerror(ctx, error):
