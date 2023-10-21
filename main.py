@@ -106,10 +106,10 @@ async def espelli(ctx, member: discord.member,reason:str):
 	try:
 		if reason == None:
 			await member.kick()
-			await ctx.send(f"{member} è stato espulso",delete_after=5)
+			await ctx.send(f"{member.mention} è stato espulso",delete_after=5)
 		if not reason == None:
 			await member.kick(reason=reason)
-			await ctx.send(f"{member} è stato espulso per {reason}",delete_after=5) 
+			await ctx.send(f"{member.mention} è stato espulso per {reason}",delete_after=5) 
 		else:
 			await ctx.send("errore",delete_after=3)
 	except Exception as variabile_errore:
