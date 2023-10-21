@@ -1,6 +1,8 @@
 #discord-base
 import discord
 from discord.ext import commands
+from discord import Option
+from discord.extr.commands import MissingPermissions
 
 #ui
 from discord import ui
