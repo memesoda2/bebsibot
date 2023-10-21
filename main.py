@@ -105,6 +105,30 @@ async def update(ctx):
 async def ciao(ctx): #dopo def c'è il nome del comando
 	await ctx.send("ciao")#invia il messagio nelle virgolette
 
+
+@client.command()
+@commands.guild_only()
+@has_permissions(kick_members=True)
+async def kick(ctx, member : discord.Member, *, reason = None):
+	try:
+		if member == None:
+			await ctx.send("specifica un membro", delete_after=4)
+		elif reason == None:
+			if member == None:
+				await ctx.send("specifica un membro", delete_after=4)
+			else:
+				await ctx.send("Ho espulso un membro", delete_after=4)
+				await member.kick(reason=f"Sei stato bannato dal seguente server: {ctx.guild.name}")
+		else:
+			await ctx.send(f"Ho espulso un membro, motivo: {reason}", delete_after=4)
+			await member.kick(reason=f"Sei stato bannato dal seguente server: {ctx.guild.name}, Motivo: '{reason}'")
+	except Exception as e:
+		if 'error code: 50013' in str(e):
+			await ctx.send("Errore: Non ho il permesso di espellere questo utente", delete_after=4)
+		else:
+			await ctx.send(f"Errore: {e}", delete_after=4)
+
+
 @client.command()
 async def espelli(ctx, member: discord.Member,reason:str):
 	try:
