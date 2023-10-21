@@ -92,7 +92,6 @@ class BugModal(ui.Modal, title='Report Bug'):
 	    
 
 @client.tree.command(name="ban", description = "ban") #slash command
-@commands.has_permissions(ban_members = True, administrator = True)
 async def ban(ctx, member: Option(discord.Member, description = "Chi vuoi bannare?"), reason: Option(str, description = "perche?", required = False)):
 	if member.id == ctx.author.id:
 		await ctx.respond("Pluh Non puoi bannarti da solo")
