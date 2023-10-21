@@ -79,7 +79,29 @@ class BugModal(ui.Modal, title='Report Bug'):
         await channel.send(embed=embed)
         embed1 = discord.Embed(title="Bug report sent", color=discord.Color.green())
         await interaction.response.send_message(embeds=[embed1], ephemeral=True)
+	    
 
+@bot.slash_command(guild_ids = servers, name = "ban", description = "Banna un membro")
+@commands.has_permissions(ban_members = True, administrator = True)
+async def ban(ctx, member: Option(discord.Member, description = "Chi vuoi bannare?), reason: Option(str, description = "perche?", required = False)):
+	if member.id == ctx.author.id:
+		await ctx.respond("Pluh Non puoi bannarti da solo")
+  	elif member.guild_permission.administrator:
+   		await ctx.respond("Non puoi bannare un admin")
+     	else:
+		if reason == None:
+  			reason = f"None provided by {ctx.author}"
+     	await member.ban(reason = reason)
+      	await ctx.respond(f" <@{ctx.author.id}>, <@{member.id}> è stato bannato da questo server\n\nReason: {reason}")
+
+       @ban.error
+       async def banerror(ctx, error):
+       	if isinstance(error, MissingPermissions):
+		await ctx.respond("Non hai i permessi necessari")
+  	else:
+   		await ctx.respond("Qualcosa è andato storto...")
+     		raise error
+  			
 
 
 @client.command()
