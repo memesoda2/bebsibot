@@ -102,7 +102,7 @@ async def ciao(ctx): #dopo def c'è il nome del comando
 	await ctx.send("ciao")#invia il messagio nelle virgolette
 
 @client.command()
-async def espelli(ctx, member: discord.member,reason:str):
+async def espelli(ctx, member: discord.Member,reason:str):
 	try:
 		if reason == None:
 			await member.kick()
