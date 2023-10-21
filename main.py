@@ -95,7 +95,7 @@ class BugModal(ui.Modal, title='Report Bug'):
 async def ban(ctx, member: Option(discord.Member, description = "Chi vuoi bannare?"), reason: Option(str, description = "perche?", required = False)):
 	if member.id == ctx.author.id:
 		await ctx.respond("Pluh Non puoi bannarti da solo")
-  	elif member.guild_permission.administrator:
+	elif member.guild_permission.administrator:
    		await ctx.respond("Non puoi bannare un admin")
      	else:
 		if reason == None:
