@@ -1,12 +1,15 @@
 #discord-base
 import discord
 from discord.ext import commands
+
+#new
 from discord import Option
-from discord.extr.commands import MissingPermissions
+from discord.ext.commands import MissingPermissions
 
-bot = discord.Bot()
 
-servers = []
+
+
+
 #ui
 from discord import ui
 from discord import app_commands
@@ -37,6 +40,8 @@ intents.reactions = True
 
 
 client = commands.Bot(command_prefix='!', intents=intents)
+
+servers = []
 
 @client.event
 async def on_ready():
@@ -86,9 +91,9 @@ class BugModal(ui.Modal, title='Report Bug'):
         await interaction.response.send_message(embeds=[embed1], ephemeral=True)
 	    
 
-@bot.slash_command(guild_ids = servers, name = "ban", description = "Banna un membro")
+@client.tree.command(name="ban", description = "ban") #slash command
 @commands.has_permissions(ban_members = True, administrator = True)
-async def ban(ctx, member: Option(discord.Member, description = "Chi vuoi bannare?), reason: Option(str, description = "perche?", required = False)):
+async def ban(ctx, member: Option(discord.Member, description = "Chi vuoi bannare?"), reason: Option(str, description = "perche?", required = False)):
 	if member.id == ctx.author.id:
 		await ctx.respond("Pluh Non puoi bannarti da solo")
   	elif member.guild_permission.administrator:
