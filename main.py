@@ -110,8 +110,8 @@ async def espelli(ctx, member: discord.member,reason:str):
 			await member.kick(reason=reason)
 		else:
 			await ctx.send("errore")
-	except Exception as variabile_errore:
-		await ctx.send(f"errore: \n{variabile_errore}")
+	except Exception as e:
+		await ctx.send(e)
 	
 
 
