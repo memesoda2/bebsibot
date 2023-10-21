@@ -101,10 +101,18 @@ async def update(ctx):
 async def ciao(ctx): #dopo def c'è il nome del comando
 	await ctx.send("ciao")#invia il messagio nelle virgolette
 
-@client.command() #sempre in ogni comando
-async def Gambling(ctx): #dopo def c'è il nome del comando
-	await ctx.send("KEEP GAMBLING BLAYD :100: ")
-
+@client.command()
+async def espelli(ctx, member: discord.member,reason:str):
+	try:
+		if reason == None:
+			await member.kick()
+		if not reason == None:
+			await member.kick(reason=reason)
+		else:
+			await ctx.send("errore")
+	except Exception as variabile_errore:
+		await ctx.send(f"errore: \n{variabile_errore}")
+	
 
 
 
