@@ -121,10 +121,10 @@ async def espelli(ctx, member: discord.member,reason:str):
 @client.event
 async def on_command_error(ctx, error):
 	if isinstance(error, discord.ext.commands.errors.CommandNotFound):
-		await ctx.send("questo comando non esiste")
+		await ctx.send("questo comando non esiste",delete_after=3)
 	elif isinstance(error, discord.ext.commands.errors.MemberNotFound):
-		await ctx.send("membro non trovato")
+		await ctx.send("membro non trovato",delete_after=3)
 	else:
-		await ctx.send(f"errore sconosciuto \n{error}")
+		await ctx.send(f"errore sconosciuto \n{error}",delete_after=3)
 
 client.run(token_json)
