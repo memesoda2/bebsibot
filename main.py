@@ -4,6 +4,9 @@ from discord.ext import commands
 from discord import Option
 from discord.extr.commands import MissingPermissions
 
+bot = discord.Bot()
+
+servers = []
 #ui
 from discord import ui
 from discord import app_commands
