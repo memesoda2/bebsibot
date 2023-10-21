@@ -107,8 +107,6 @@ async def ciao(ctx): #dopo def c'è il nome del comando
 
 
 @client.command()
-@commands.guild_only()
-@has_permissions(kick_members=True)
 async def kick(ctx, member : discord.Member, *, reason = None):
 	try:
 		if member == None:
