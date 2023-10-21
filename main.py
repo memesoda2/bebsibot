@@ -2,14 +2,6 @@
 import discord
 from discord.ext import commands
 
-#new
-from discord import Option
-from discord.ext.commands import MissingPermissions
-
-
-
-
-
 #ui
 from discord import ui
 from discord import app_commands
@@ -91,17 +83,6 @@ class BugModal(ui.Modal, title='Report Bug'):
         await interaction.response.send_message(embeds=[embed1], ephemeral=True)
 	    
 
-@client.tree.command(name="ban", description = "ban") #slash command
-async def ban(ctx, member: Option(discord.Member, description = "Chi vuoi bannare?"), reason: Option(str, description = "perche?", required = False)):
-	if member.id == ctx.author.id:
-		await ctx.respond("Pluh Non puoi bannarti da solo")
-	elif member.guild_permission.administrator:
-   		await ctx.respond("Non puoi bannare un admin")
-	else:
-		if reason == None:
-			reason = f"None provided by {ctx.author}"
-			await member.ban(reason = reason)
-			await ctx.respond(f" <@{ctx.author.id}>, <@{member.id}> è stato bannato da questo server\n\nReason: {reason}")
 
 
 
