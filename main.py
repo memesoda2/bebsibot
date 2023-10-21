@@ -103,14 +103,6 @@ async def ban(ctx, member: Option(discord.Member, description = "Chi vuoi bannar
 			await member.ban(reason = reason)
 			await ctx.respond(f" <@{ctx.author.id}>, <@{member.id}> è stato bannato da questo server\n\nReason: {reason}")
 
-       @ban.error
-       async def banerror(ctx, error):
-       	if isinstance(error, MissingPermissions):
-		await ctx.respond("Non hai i permessi necessari")
-  	else:
-   		await ctx.respond("Qualcosa è andato storto...")
-     		raise error
-  			
 
 
 @client.command()
