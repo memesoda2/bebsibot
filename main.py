@@ -53,6 +53,7 @@ async def on_message(message):
     await client.process_commands(message)  # Add this line
   elif "!help" in message.content:
 	await message.channel.send("Qui trovi una lista dei comandi per ora disponibili: /reportbug per reportare un bug all interno dell server, Altri comandi in arrivo")
+else:
 
 #comandi
 
