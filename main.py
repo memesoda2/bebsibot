@@ -89,6 +89,10 @@ class BugModal(ui.Modal, title='Report Bug'):
 async def say(ctx, *, message):
     # Invia il messaggio dell'utente
     await ctx.send(message)
+
+@client.command(name='help')
+async def say(ctx):
+    await ctx.send('Lista comandi: !Say')
 	    
 
 
