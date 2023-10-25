@@ -40,7 +40,8 @@ async def on_ready():
   slash_sync = await client.tree.sync()
   print(f"Synced app command (tree) {len(slash_sync)}.")
   print(f'Logged in as {client.user.name}')
-  
+
+
 
 
 @client.event
@@ -81,9 +82,15 @@ class BugModal(ui.Modal, title='Report Bug'):
         await channel.send(embed=embed)
         embed1 = discord.Embed(title="Bug report sent", color=discord.Color.green())
         await interaction.response.send_message(embeds=[embed1], ephemeral=True)
+
+
+
+
+@bot.command(name='say')
+async def say(ctx, *, message):
+    # Invia il messaggio dell'utente
+    await ctx.send(message)
 	    
-
-
 
 
 @client.command()
