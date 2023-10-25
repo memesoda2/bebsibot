@@ -31,7 +31,7 @@ intents.reactions = True
 
 
 
-client = commands.Bot(command_prefix='!', intents=intents,case_intensive=True)
+client = commands.Bot(command_prefix='!', intents=intents,case_insensitive=True)
 
 servers = []
 
