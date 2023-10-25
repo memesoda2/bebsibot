@@ -84,6 +84,11 @@ class BugModal(ui.Modal, title='Report Bug'):
         await interaction.response.send_message(embeds=[embed1], ephemeral=True)
 
 
+
+@client.command(name='say')
+async def say(ctx, *, message):
+    # Invia il messaggio dell'utente
+    await ctx.send(message)
 	    
 
 
