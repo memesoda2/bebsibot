@@ -52,6 +52,7 @@ async def on_message(message):
     await message.channel.send("Python Blyad :flag_ru:")
   else:
     await client.process_commands(message)  # Add this line
+    await message.delete()
 
 #comandi
 
