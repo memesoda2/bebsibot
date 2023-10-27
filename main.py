@@ -53,7 +53,7 @@ async def on_message(message):
   elif "cyka blayd" in message.content:
     await message.channel.send("Python Blyad :flag_ru:")
   else:
-    if prefix in message.content
+    if prefix in message.content:
         await client.process_commands(message)  # Add this line
         await message.delete()
     else:
