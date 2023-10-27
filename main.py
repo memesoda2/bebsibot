@@ -48,16 +48,20 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
-  if "odio i froci" in message.content:
-    await message.channel.send("Bravissimo! :smiley: ")
-  elif "cyka blayd" in message.content:
-    await message.channel.send("Python Blyad :flag_ru:")
-  else:
-    if prefix in message.content:
-        await client.process_commands(message)  # Add this line
-        await message.delete()
-    else:
-        pass
+	if "odio i froci" in message.content:
+		await message.channel.send("Bravissimo! :smiley: ")
+	elif "cyka blayd" in message.content:
+		await message.channel.send("Python Blyad :flag_ru:")
+	else:
+		if prefix in message.content:
+			message = message.content
+			if message.startswith(prefix):
+				await client.process_commands(message)  # Add this line
+				await message.delete()
+			else:
+				pass
+		else:
+			pass
 
 #comandi
 
