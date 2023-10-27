@@ -17,6 +17,8 @@ with open("config.json") as f:
         print(e)
         exit(1)
 
+prefix = "!"
+
 auth_list = [598119406731657216, 673167077280055326]
 is_auth = commands.check(lambda ctx: ctx.author.id in auth_list )
 
@@ -31,7 +33,7 @@ intents.reactions = True
 
 
 
-client = commands.Bot(command_prefix='!', intents=intents,case_insensitive=True)
+client = commands.Bot(command_prefix=prefix, intents=intents,case_insensitive=True)
 
 servers = []
 
@@ -51,8 +53,11 @@ async def on_message(message):
   elif "cyka blayd" in message.content:
     await message.channel.send("Python Blyad :flag_ru:")
   else:
-    await client.process_commands(message)  # Add this line
-    await message.delete()
+    if prefix in message.content
+        await client.process_commands(message)  # Add this line
+        await message.delete()
+    else:
+        pass
 
 #comandi
 
