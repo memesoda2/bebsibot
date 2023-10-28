@@ -34,8 +34,8 @@ intents.reactions = True
 
 
 client = commands.Bot(command_prefix=prefix, intents=intents,case_insensitive=True)
+client.remove_command('help')
 
-servers = []
 
 @client.event
 async def on_ready():
@@ -54,7 +54,6 @@ async def on_message(message):
 		await message.channel.send("Python Blyad :flag_ru:")
 	else:
 		await client.process_commands(message)  # Add this line
-		await message.delete()
 
 
 #comandi
