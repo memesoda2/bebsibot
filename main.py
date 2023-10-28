@@ -56,6 +56,15 @@ async def on_message(message):
 		await client.process_commands(message)  # Add this line
 
 
+
+@client.command()
+async def help(ctx):
+	command_list = []
+	for command in client.commands:
+		command_list.append(f"> Nome: {command.name}\n")
+		message = "\n".join(command_list)
+		await ctx.send(f'{message}')
+	
 #comandi
 
 @client.event
@@ -88,14 +97,12 @@ class BugModal(ui.Modal, title='Report Bug'):
 
 
 
-@client.command(name='say')
+@client.command()
 async def say(ctx, *, message):
     # Invia il messaggio dell'utente
     await ctx.send(message)
 
-@client.command(name='Aiuto')
-async def say(ctx):
-    await ctx.send('Lista comandi: !Say')
+
 	    
 
 
