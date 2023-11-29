@@ -2,6 +2,11 @@
 import discord
 from discord.ext import commands
 
+
+import pytube
+
+
+
 #ui
 from discord import ui
 from discord import app_commands
@@ -128,6 +133,201 @@ async def ciao(ctx): #dopo def c'è il nome del comando
 @client.command()
 async def .bay(ctx):
 	await ctx.send("Il soggetto baia è di classe keter in quanto mangia patatine tutto il giorno e si sega sui bambini maschi, questo soggetto è noto anche per la sua bravura a fare Plugin SL Sminchiati cosi tanto da farti esplodere il computer")
+
+
+
+
+
+
+
+
+
+@client.command()
+async def play(ctx, url: str):
+	global filename
+	if ctx.author.voice is None:
+		await ctx.send("Non sei in un canale vocale")
+	else:
+		if ctx.guild.voice_client is not None and ctx.guild.voice_client.is_playing():
+			await ctx.send(f"Aspetta che la canzone finisca, Usa il comando stop per far finire la canzone", color=discord.Colour.red())
+		else:
+			#else:
+			try:
+				if url.startswith("https://youtu.be/"):
+					share_video_id = url.replace("https://youtu.be/", "")
+					share_video_url = "youtube.com/watch?v=" + f"{share_video_id}"
+					await ctx.send("Dowload in corso...")
+					
+					#find-video
+					video = pytube.YouTube(share_video_url)
+					
+					#title-file
+					number = random.randint(1, 100000)
+					extension = "mp4"
+					file_name = f"{number}.{extension}"
+					#video.streams.get_highest_resolution().download(filename=file_name)
+					
+					#download
+					video.streams.first().download(filename=file_name)
+					
+					#info
+					video_length = video.length
+					minutes, seconds = divmod(video_length, 60)
+					
+					artist = video.author
+					
+					#global
+					
+					filename = f"{file_name}"
+	
+					#video-info-embed
+					await ctx.send(f"Ora in ascolto \n\n***Titolo: ***`{video.title}`\n\n`{artist}` \n\n `{minutes}:{seconds}`")
+					#await msg.delete()
+					#await msg.edit(embed=title_embed)
+					await asyncio.sleep(0.5)
+	
+	
+	
+					# Play the video
+					source = discord.PCMVolumeTransformer(discord.FFmpegPCMAudio(f"{file_name}"))
+					voice_channel = ctx.author.voice.channel
+					voice = await voice_channel.connect()
+					voice.play(source)
+		
+					#volume fix
+					volume = 0.4
+					voice_client = ctx.guild.voice_client
+					voice_client.source.volume = volume
+	
+					# Wait for the video to finish playing
+					while voice.is_playing():
+						await asyncio.sleep(1)
+	
+					# Disconnect from the voice channel
+					await voice.disconnect()
+	
+					# Delete the video file
+					os.remove(f"{file_name}")
+					await ctx.send("canzone finita")
+					#pass
+					#return
+				else:
+					#loading embed
+					await ctx.send("dowload in corso...")
+					
+					#find-video
+					video = pytube.YouTube(url)
+					
+					#title-file
+					number = random.randint(1, 100000)
+					extension = "mp4"
+					file_name = f"{number}.{extension}"
+					#video.streams.get_highest_resolution().download(filename=file_name)
+					
+					#download
+					video.streams.first().download(filename=file_name)
+					
+					#info
+					video_length = video.length
+					minutes, seconds = divmod(video_length, 60)
+					
+					artist = video.author
+					
+					#global
+					
+					filename = f"{file_name}"
+	
+					#video-info-embed
+					await ctx.send(f"Ora in ascolto* \n\n***Titolo: ***`{video.title}`\n\n`{artist}` \n\n `{minutes}:{seconds}`")
+					#await msg.delete()
+					#await msg.edit(embed=title_embed)
+					await asyncio.sleep(0.5)
+	
+	
+	
+					# Play the video
+					source = discord.PCMVolumeTransformer(discord.FFmpegPCMAudio(f"{file_name}"))
+					voice_channel = ctx.author.voice.channel
+					voice = await voice_channel.connect()
+					voice.play(source)
+		
+					#volume fix
+					volume = 0.4
+					voice_client = ctx.guild.voice_client
+					voice_client.source.volume = volume
+	
+					# Wait for the video to finish playing
+					while voice.is_playing():
+						await asyncio.sleep(1)
+	
+					# Disconnect from the voice channel
+					await voice.disconnect()
+	
+					# Delete the video file
+					os.remove(f"{file_name}")
+					await ctx.send("canzone finita")
+					#pass
+					#return
+					#error
+			except pytube.exceptions.PytubeError as e:
+				if 'is age restricted' in str(e):
+					await asyncio.sleep(1)
+					#await ctx.send('the video is age-restricted.')
+					error_embed_2 = discord.Embed(title="Errore", color=discord.Colour.red())
+					await ctx.send(embed=error_embed_2)
+					await asyncio.sleep(0.5)
+				elif 'is streaming live' in str(e):
+					await asyncio.sleep(1)
+					error_embed_3 = discord.Embed(title="Errore", color=discord.Colour.red())
+					await ctx.send(embed=error_embed_3)
+					await asyncio.sleep(0.5)
+				else:
+					await asyncio.sleep(1)
+					error_embed_4 = discord.Embed(title="***Errore sconosciuto.***", color=discord.Colour.red())
+					await ctx.send(embed=error_embed_4)
+					await asyncio.sleep(0.5)
+			except Exception as e:
+				if str(e) == "Already connected to a voice channel.":
+					pass
+				else:
+					print(e)
+					await ctx.send("errore sconosciuto")
+
+
+
+
+
+
+@client.command()
+async def stop(ctx):				
+	global filename #global
+	
+	voice_client = ctx.guild.voice_client
+	if voice_client and voice_client.is_connected():
+		if voice_client.is_playing():
+			try:
+				await ctx.send("Ho terminato la canzone", ephemeral=True)
+				voice_client.stop()
+				await voice_client.disconnect()
+				#await asyncio.sleep(2)
+				os.remove(f"{filename}") #global
+			except Exception as e:
+				pass
+		else:
+			try:
+				await ctx.send(':x: Il bot è stato disconesso')
+				os.remove(f"{filename}") #global
+				await voice_client.disconnect()
+			except Exception as e:
+				try:
+					os.remove(f"{filename}")
+				except Exception:
+					pass
+	else:
+		await ctx.send("errore sconossiuto")
+
+
+		
 
 @client.command()
 async def kick(ctx, member : discord.Member, *, reason = None):
