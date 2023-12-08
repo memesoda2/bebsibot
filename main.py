@@ -50,7 +50,7 @@ async def on_ready():
 
 
 
-
+'''
 @client.event
 async def on_message(message):
 	if "odio i froci" in message.content:
@@ -59,7 +59,7 @@ async def on_message(message):
 		await message.channel.send("Python Blyad :flag_ru:")
 	else:
 		await client.process_commands(message)  # Add this line
-
+'''
 
 
 @client.command()
