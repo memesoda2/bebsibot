@@ -44,13 +44,13 @@ client.remove_command('help')
 
 @client.event
 async def on_ready():
-  #slash_sync = await client.tree.sync()
-  #print(f"Synced app command (tree) {len(slash_sync)}.")
+  slash_sync = await client.tree.sync()
+  print(f"Synced app command (tree) {len(slash_sync)}.")
   print(f'Logged in as {client.user.name}')
 
 
 
-'''
+
 @client.event
 async def on_message(message):
 	if "odio i froci" in message.content:
@@ -59,7 +59,7 @@ async def on_message(message):
 		await message.channel.send("Python Blyad :flag_ru:")
 	else:
 		await client.process_commands(message)  # Add this line
-'''
+
 
 
 @client.command()
@@ -81,8 +81,24 @@ async def on_member_join(member):
     role = discord.utils.get(member.guild.roles, id=1034914089807400970)
     await member.add_roles(role)
 
+@client.tree.command(name="reportbug", description="Segnala un bug") #slash command
+async def report_bug(interaction: discord.Interaction):
+  modal = BugModal
+  await interaction.response.send_modal(BugModal())
 
+class BugModal(ui.Modal, title='Report Bug'):
+    bug_name = ui.TextInput(label='Bugged Command name',required=True,placeholder='Bugged command name...', max_length=50)
+    answer = ui.TextInput(label='Description of the bug', style=discord.TextStyle.paragraph, max_length=300,placeholder='Bug description...')
 
+    async def on_submit(self, interaction: discord.Interaction):
+        channel = client.get_channel(1164195802047053894)
+        embed = discord.Embed(title="Bug report ",color=discord.Color.green())
+        embed.add_field(name="Bugged Command name", value=self.children[0].value)
+        embed.add_field(name="Description of the bug", value=self.children[1].value)
+        embed.add_field(name="User:", value=f"`{interaction.user}`")
+        await channel.send(embed=embed)
+        embed1 = discord.Embed(title="Bug report sent", color=discord.Color.green())
+        await interaction.response.send_message(embeds=[embed1], ephemeral=True)
 
 
 
