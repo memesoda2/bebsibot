@@ -44,8 +44,8 @@ client.remove_command('help')
 
 @client.event
 async def on_ready():
-  slash_sync = await client.tree.sync()
-  print(f"Synced app command (tree) {len(slash_sync)}.")
+  #slash_sync = await client.tree.sync()
+  #print(f"Synced app command (tree) {len(slash_sync)}.")
   print(f'Logged in as {client.user.name}')
 
 
