@@ -131,7 +131,7 @@ async def ciao(ctx): #dopo def c'è il nome del comando
 	await ctx.send("ciao")#invia il messagio nelle virgolette
 
 @client.command()
-async def .bay(ctx):
+async def bay(ctx):
 	await ctx.send("Il soggetto baia è di classe keter in quanto mangia patatine tutto il giorno e si sega sui bambini maschi, questo soggetto è noto anche per la sua bravura a fare Plugin SL Sminchiati cosi tanto da farti esplodere il computer")
 
 
